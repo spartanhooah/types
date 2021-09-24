@@ -8,7 +8,7 @@ import (
 // basic types (numbers, strings, booleans)
 var myInt int
 
-// Discouraged
+// (discouraged)
 var myInt16 int16
 var myInt32 int32
 var myInt64 int64
@@ -60,5 +60,25 @@ func main() {
 		Year: 2019,
 	}
 
-	fmt.Printf("My car is a %d %s %s", myCar.Year, myCar.Make, myCar.Model)
+	fmt.Printf("My car is a %d %s %s\n", myCar.Year, myCar.Make, myCar.Model)
+
+	// reference types
+	// pointers
+	x := 10
+	myFirstPointer := &x
+
+	fmt.Println("x is", x)
+	fmt.Println("myFirstPointer is", myFirstPointer)
+
+	*myFirstPointer = 15
+
+	fmt.Println("x is now", x)
+	
+	changePointerValue(myFirstPointer)
+	
+	fmt.Println("x is now", x)
+}
+
+func changePointerValue(num *int) {
+	*num = 25
 }
