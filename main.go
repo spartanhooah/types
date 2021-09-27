@@ -101,6 +101,30 @@ func main() {
 
 	animals = deleteFromSlice(animals, 1)
 	fmt.Println(animals)
+
+	//maps
+	intMap := make(map[string]int)
+	intMap["one"] = 1
+	intMap["two"] = 2
+	intMap["three"] = 3
+	intMap["four"] = 4
+	intMap["five"] = 5
+
+	for key, value := range(intMap) {
+		fmt.Println(key, value)
+	}
+
+	delete(intMap, "four")
+
+	element, found := intMap["four"]
+
+	if found {
+		fmt.Println("Found", element)
+	} else {
+		fmt.Println("Didn't find", element)
+	}
+
+	intMap["two"] = 4
 }
 
 func changePointerValue(num *int) {
