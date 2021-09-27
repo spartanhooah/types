@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"sort"
 )
 
 // basic types (numbers, strings, booleans)
@@ -34,13 +34,13 @@ func main() {
 	// basic types
 	myString := "Ben"
 
-	log.Println(myString)
+	fmt.Println(myString)
 
 	myString = "John" // new string stored in the variable - strings are immutable
 
 	var myBool = true
 	myBool = false
-	log.Println(myBool)
+	fmt.Println(myBool)
 
 	// arrays
 	var myStrings [3]string
@@ -77,8 +77,39 @@ func main() {
 	changePointerValue(myFirstPointer)
 	
 	fmt.Println("x is now", x)
+
+	// slices
+	var animals []string
+	animals = append(animals, "dog")
+	animals = append(animals, "fish")
+	animals = append(animals, "cat")
+	animals = append(animals, "horse")
+
+	fmt.Println(animals)
+
+	for i, animal := range animals {
+		fmt.Println(i, animal)
+	}
+
+	fmt.Println("Element 0 is", animals[0])
+	fmt.Println("The first two elements are", animals[0:2])
+	fmt.Println("The slice has", len(animals), "animals")
+	fmt.Println("Is it sorted?", sort.StringsAreSorted(animals))
+	sort.Strings(animals)
+	fmt.Println("Is it sorted?", sort.StringsAreSorted(animals))
+	fmt.Println(animals)
+
+	animals = deleteFromSlice(animals, 1)
+	fmt.Println(animals)
 }
 
 func changePointerValue(num *int) {
 	*num = 25
+}
+
+func deleteFromSlice(source []string, i int) []string {
+	source[i] = source[len(source) - 1]
+	// source[len(source) - 1] = ""
+	
+	return source[:len(source) - 1]
 }
