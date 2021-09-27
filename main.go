@@ -30,6 +30,21 @@ type Car struct {
 	Year          int
 }
 
+// functions
+type Animal struct {
+	Name         string
+	Sound        string
+	NumberOfLegs int
+}
+
+func (animal *Animal) Says() {
+	fmt.Printf("A %s says %s\n", animal.Name, animal.Sound)
+}
+
+func (animal *Animal) HowManyLegs() {
+	fmt.Printf("A %s has %d legs\n", animal.Name, animal.NumberOfLegs)
+}
+
 func main() {
 	// basic types
 	myString := "Ben"
@@ -53,11 +68,11 @@ func main() {
 	// structs
 	myCar := Car{
 		NumberOfTires: 4,
-		Luxury: true,
-		BucketSeats: true,
-		Make: "Volvo",
-		Model: "XC90",
-		Year: 2019,
+		Luxury:        true,
+		BucketSeats:   true,
+		Make:          "Volvo",
+		Model:         "XC90",
+		Year:          2019,
 	}
 
 	fmt.Printf("My car is a %d %s %s\n", myCar.Year, myCar.Make, myCar.Model)
@@ -73,9 +88,9 @@ func main() {
 	*myFirstPointer = 15
 
 	fmt.Println("x is now", x)
-	
+
 	changePointerValue(myFirstPointer)
-	
+
 	fmt.Println("x is now", x)
 
 	// slices
@@ -110,7 +125,7 @@ func main() {
 	intMap["four"] = 4
 	intMap["five"] = 5
 
-	for key, value := range(intMap) {
+	for key, value := range intMap {
 		fmt.Println(key, value)
 	}
 
@@ -125,6 +140,28 @@ func main() {
 	}
 
 	intMap["two"] = 4
+
+	// functions
+	myTotal := sumMany(2, 3, 4, 5)
+
+	fmt.Println(myTotal)
+
+	dog := Animal{
+		Name:         "dog",
+		Sound:        "woof",
+		NumberOfLegs: 4,
+	}
+
+	dog.Says()
+
+	cat := Animal{
+		Name:         "cat",
+		Sound:        "meow",
+		NumberOfLegs: 4,
+	}
+
+	cat.Says()
+	cat.HowManyLegs()
 }
 
 func changePointerValue(num *int) {
@@ -132,8 +169,25 @@ func changePointerValue(num *int) {
 }
 
 func deleteFromSlice(source []string, i int) []string {
-	source[i] = source[len(source) - 1]
+	source[i] = source[len(source)-1]
 	// source[len(source) - 1] = ""
-	
-	return source[:len(source) - 1]
+
+	return source[:len(source)-1]
+}
+
+// "naked" return; generally discouraged
+func addtwoNumbers(x, y int) (sum int) {
+	sum = x + y
+
+	return
+}
+
+func sumMany(nums ...int) int {
+	total := 0
+
+	for _, addend := range nums {
+		total += addend
+	}
+
+	return total
 }
