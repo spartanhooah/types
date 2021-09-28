@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"sort"
+
+	"github.com/eiannone/keyboard"
 )
 
 // basic types (numbers, strings, booleans)
@@ -44,6 +46,9 @@ func (animal *Animal) Says() {
 func (animal *Animal) HowManyLegs() {
 	fmt.Printf("A %s has %d legs\n", animal.Name, animal.NumberOfLegs)
 }
+
+// channels
+var keyPressChan chan rune
 
 func main() {
 	// basic types
@@ -162,6 +167,27 @@ func main() {
 
 	cat.Says()
 	cat.HowManyLegs()
+
+	// channels
+	keyPressChan = make(chan rune)
+	go listenForKeyPress()
+
+	fmt.Println("Press any key, or q to quit")
+	_ = keyboard.Open()
+
+	defer func() {
+		keyboard.Close()
+	}()
+
+	for {
+		char, _, _ := keyboard.GetSingleKey()
+
+		if char == 'q' || char == 'Q' {
+			break
+		}
+
+		keyPressChan <- char
+	}
 }
 
 func changePointerValue(num *int) {
@@ -190,4 +216,12 @@ func sumMany(nums ...int) int {
 	}
 
 	return total
+}
+
+// channels
+func listenForKeyPress() {
+	for {
+		key := <- keyPressChan
+		fmt.Println("You pressed", string(key))
+	}
 }
