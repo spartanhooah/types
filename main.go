@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
-
-	"github.com/eiannone/keyboard"
+	// "github.com/eiannone/keyboard"
 )
 
 // basic types (numbers, strings, booleans)
@@ -49,6 +48,42 @@ func (animal *Animal) HowManyLegs() {
 
 // channels
 var keyPressChan chan rune
+
+// interfaces
+// interface type
+type Pet interface {
+	Says() string
+	HowManyLegs() int
+}
+
+type Dog struct {
+	Name         string
+	Sound        string
+	NumberOfLegs int
+}
+
+func (dog *Dog) Says() string {
+	return dog.Sound
+}
+
+func (dog *Dog) HowManyLegs() int {
+	return dog.NumberOfLegs
+}
+
+type Cat struct {
+	Name         string
+	Sound        string
+	NumberOfLegs int
+	HasTail      bool
+}
+
+func (cat *Cat) Says() string {
+	return cat.Sound
+}
+
+func (cat *Cat) HowManyLegs() int {
+	return cat.NumberOfLegs
+}
 
 func main() {
 	// basic types
@@ -169,25 +204,43 @@ func main() {
 	cat.HowManyLegs()
 
 	// channels
-	keyPressChan = make(chan rune)
-	go listenForKeyPress()
+	// keyPressChan = make(chan rune)
+	// go listenForKeyPress()
 
-	fmt.Println("Press any key, or q to quit")
-	_ = keyboard.Open()
+	// fmt.Println("Press any key, or q to quit")
+	// _ = keyboard.Open()
 
-	defer func() {
-		keyboard.Close()
-	}()
+	// defer func() {
+	// 	keyboard.Close()
+	// }()
 
-	for {
-		char, _, _ := keyboard.GetSingleKey()
+	// for {
+	// 	char, _, _ := keyboard.GetSingleKey()
 
-		if char == 'q' || char == 'Q' {
-			break
-		}
+	// 	if char == 'q' || char == 'Q' {
+	// 		break
+	// 	}
 
-		keyPressChan <- char
+	// 	keyPressChan <- char
+	// }
+
+	// interfaces
+	dog2 := Dog{
+		Name:         "dog",
+		Sound:        "woof",
+		NumberOfLegs: 4,
 	}
+
+	riddle(&dog2)
+
+	cat2 := Cat{
+		Name:         "cat",
+		NumberOfLegs: 4,
+		Sound:        "meow",
+		HasTail:      true,
+	}
+
+	riddle(&cat2)
 }
 
 func changePointerValue(num *int) {
@@ -221,7 +274,13 @@ func sumMany(nums ...int) int {
 // channels
 func listenForKeyPress() {
 	for {
-		key := <- keyPressChan
+		key := <-keyPressChan
 		fmt.Println("You pressed", string(key))
 	}
+}
+
+// interfaces
+func riddle(pet Pet) {
+	riddle := fmt.Sprintf(`This animal says "%s" and has %d legs. What animal is it?`, pet.Says(), pet.HowManyLegs())
+	fmt.Println(riddle)
 }
