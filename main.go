@@ -85,6 +85,14 @@ func (cat *Cat) HowManyLegs() int {
 	return cat.NumberOfLegs
 }
 
+// booleans
+type Employee struct {
+	Name     string
+	Age      int
+	Salary   int
+	FullTime bool
+}
+
 func main() {
 	// basic types
 	myString := "Ben"
@@ -254,6 +262,55 @@ func main() {
 
 	isATeenager := age >= 13 && age < 20
 	fmt.Println(name, "is a teenager:", isATeenager)
+
+	// booleans / conditionals
+	apples := 18
+	oranges := 9
+
+	fmt.Println(apples == oranges)
+	fmt.Println(apples != oranges)
+	fmt.Printf("%d > %d: %t\n", apples, oranges, apples > oranges)
+	fmt.Printf("%d < %d: %t\n", apples, oranges, apples > oranges)
+	fmt.Printf("%d >= %d: %t\n", apples, oranges, apples > oranges)
+	fmt.Printf("%d <= %d: %t\n", apples, oranges, apples > oranges)
+
+	jack := Employee{
+		Name:     "Jack Smith",
+		Age:      27,
+		Salary:   40000,
+		FullTime: false,
+	}
+
+	jill := Employee{
+		Name:     "Jill Jones",
+		Age:      33,
+		Salary:   60000,
+		FullTime: true,
+	}
+
+	var employees []Employee
+	employees = append(employees, jack)
+	employees = append(employees, jill)
+
+	for _, employee := range employees {
+		if employee.Age > 30 {
+			fmt.Println(employee.Name, "is over 30")
+		} else {
+			fmt.Println(employee.Name, "is 30 or younger")
+		}
+
+		if employee.Age > 30 && employee.Salary > 50000 {
+			fmt.Println(employee.Name, "makes more than 50000 and is over 30")
+		} else {
+			fmt.Println("Either", employee.Name, "makes less than 50000 or is 30 or younger")
+		}
+
+		if employee.Age > 30 || employee.Salary > 50000 {
+			fmt.Println("Either", employee.Name, "makes more than 50000 or is over 30")
+		} else {
+			fmt.Println(employee.Name, "makes less than 50000 and is 30 or younger")
+		}
+	}
 }
 
 func changePointerValue(num *int) {
